@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.crud</groupId>
-	<artifactId>CongresoIUD_DAO</artifactId>
+	<artifactId>senadoIUD_DAO</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CongresoIUD_DAO</name>
 	<description>Diplomado</description>
