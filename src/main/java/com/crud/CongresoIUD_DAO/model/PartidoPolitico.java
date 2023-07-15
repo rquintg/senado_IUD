@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "partido_politico")
-public class partidoPolitico  implements Serializable {
+public class PartidoPolitico implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +18,12 @@ public class partidoPolitico  implements Serializable {
     @Column(unique = true)
     private String nombre;
 
-    public partidoPolitico(){}
+    @Column(name= "descripcion")
+    private String descripcion;
 
-    public partidoPolitico(long id) {
+    public PartidoPolitico(){}
+
+    public PartidoPolitico(long id) {
         super();
         this.id = id;
     }
