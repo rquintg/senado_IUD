@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/partidoPolitico")
-public class partidoPoliticoController {
+public class PartidoPoliticoController {
 
 //    private final com.crud.CongresoIUD_DAO.service.partidoPoliticoService partidoPoliticoService;
 
@@ -31,15 +31,19 @@ public class partidoPoliticoController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(partidoPoliticoService.savePartido(partidoPoliticoDTORequest));
     }
-//
-//    @PutMapping
-//    public ResponseEntity<Object> updatePartido(@RequestBody PartidoPolitico partidoPolitico){
-//        return this.partidoPoliticoService.addNewPartido(partidoPolitico);
-//    }
-//
-//    @DeleteMapping(path = "{partidoId}")
-//    public ResponseEntity<Object> deletePartido(@PathVariable("partidoId") long id){
-//        return this.partidoPoliticoService.deletePartido(id);
-//    }
+
+    @PutMapping(value = "{partidoId}")
+    public ResponseEntity<PartidoPoliticoDTO> updatePartidoPolitico (@RequestBody PartidoPoliticoDTORequest partidoPoliticoDTORequest, @PathVariable int partidoId) {
+        this.partidoPoliticoService.update(partidoPoliticoDTORequest, partidoId);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(partidoPoliticoService.savePartido(partidoPoliticoDTORequest));
+    }
+
+
+    @DeleteMapping(path = "{partidoId}")
+    public ResponseEntity<PartidoPoliticoDTO> deletePartido(@PathVariable("partidoId") Long id){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(partidoPoliticoService.deletePartido(id));
+    }
 
 }

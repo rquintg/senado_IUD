@@ -4,7 +4,7 @@ package com.crud.CongresoIUD_DAO.service.impl;
 import com.crud.CongresoIUD_DAO.dto.request.PartidoPoliticoDTORequest;
 import com.crud.CongresoIUD_DAO.dto.response.PartidoPoliticoDTO;
 import com.crud.CongresoIUD_DAO.model.PartidoPolitico;
-import com.crud.CongresoIUD_DAO.repository.IpartidoPoliticoRepository;
+import com.crud.CongresoIUD_DAO.repository.IPartidoPoliticoRepository;
 import com.crud.CongresoIUD_DAO.service.iface.IPartidoPoliticoService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -12,16 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @FieldDefaults (level = AccessLevel.PRIVATE)
 public class PartidoPoliticoServiceImpl implements IPartidoPoliticoService {
 
-    IpartidoPoliticoRepository partidoPoliticoRepository;
+    IPartidoPoliticoRepository partidoPoliticoRepository;
 
     @Autowired
-    public PartidoPoliticoServiceImpl(IpartidoPoliticoRepository partidoPoliticoRepository){
+    public PartidoPoliticoServiceImpl(IPartidoPoliticoRepository partidoPoliticoRepository){
         this.partidoPoliticoRepository = partidoPoliticoRepository;
     }
 
@@ -58,6 +59,22 @@ public class PartidoPoliticoServiceImpl implements IPartidoPoliticoService {
                 .build();
     }
 
+    @Override
+    public void update(PartidoPoliticoDTORequest partidoPoliticoDTORequest, int partidoId) {
+        Optional<PartidoPolitico> partidos = this.partidoPoliticoRepository.findById(Long.valueOf(partidoId));//consultamos el ID
+        PartidoPolitico partido = partidos.get();//se cual es el senador
+        //ACtualizo los datos del senador
+        partido.setNombre(partidoPoliticoDTORequest.getNombre());
+        partido.setDescripcion(partidoPoliticoDTORequest.getDescripcion());
 
+        //guardo los datos actualizados
+        this.partidoPoliticoRepository.save(partido);
+    }
 
+    @Override
+    public PartidoPoliticoDTO deletePartido(Long id){
+        partidoPoliticoRepository.deleteById(id);
+        return  PartidoPoliticoDTO.builder().build();
+    }
 }
+

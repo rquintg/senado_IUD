@@ -11,5 +11,7 @@ public interface IPartidoPoliticoService {
 
     PartidoPoliticoDTO savePartido(PartidoPoliticoDTORequest partidoPoliticoDTORequest);
 
-  /*  PartidoPoliticoDTO deletePartido(Long id);*/
+    void update (PartidoPoliticoDTORequest partidoPoliticoDTORequest, int partidoId);
+
+    PartidoPoliticoDTO deletePartido(Long id);
 }
