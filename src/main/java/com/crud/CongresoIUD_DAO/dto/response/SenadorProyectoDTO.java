@@ -12,7 +12,7 @@ public class SenadorProyectoDTO {
 
     Long id;
     String voto;
-    String senador_id;
-    String proyecto_id;
+    String senador;
+    String proyecto;
 
 }

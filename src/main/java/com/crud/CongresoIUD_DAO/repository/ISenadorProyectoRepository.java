@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 public interface ISenadorProyectoRepository extends JpaRepository<SenadorProyecto, Long> {
 
-    // SenadorProyecto findSenadorProyectoByVoto(Long id);
+    SenadorProyecto findBySenadorIdAndProyectoId(Long senadorId, Long proyectoId);
 
 
 }

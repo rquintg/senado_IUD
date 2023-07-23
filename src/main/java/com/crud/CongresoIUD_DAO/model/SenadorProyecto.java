@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "senador_proyectos")
+@Table(name = "senador_proyectos", uniqueConstraints = {@UniqueConstraint( columnNames = {"senador_id", "proyecto_id"})})
 public class SenadorProyecto implements Serializable {
 
     @Id
@@ -19,11 +19,11 @@ public class SenadorProyecto implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "senador_id")
-    Senador senador_id;
+    Senador senador;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proyecto_id")
-    Proyecto proyecto_id;
+    Proyecto proyecto;
 
 
     public SenadorProyecto() {

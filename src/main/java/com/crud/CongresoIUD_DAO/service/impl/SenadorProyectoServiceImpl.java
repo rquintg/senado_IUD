@@ -34,8 +34,8 @@ public class SenadorProyectoServiceImpl implements ISenadorProyectoService {
         return senadorProyecto.stream().map(senadorproyecto -> SenadorProyectoDTO.builder()
                 .id(senadorproyecto.getId())
                 .voto(senadorproyecto.getVoto())
-                .senador_id(String.valueOf(senadorproyecto.getSenador_id()))
-                .proyecto_id(String.valueOf(senadorproyecto.getProyecto_id()))
+                .senador(String.valueOf(senadorproyecto.getSenador()))
+                .proyecto(String.valueOf(senadorproyecto.getProyecto()))
                 .build()).collect(Collectors.toList());
     }
 
@@ -44,47 +44,26 @@ public class SenadorProyectoServiceImpl implements ISenadorProyectoService {
 
         SenadorProyecto senadorProyecto;
 
+        SenadorProyecto senadorProyecto1 = senadorProyectoRepository.findBySenadorIdAndProyectoId
+                (senadorProyectoDTORequest.getSenador().getId(),senadorProyectoDTORequest.getProyecto().getId());
 
-        //senadorProyecto = senadorProyectoRepository.findSenadorProyectoByVoto(senadorProyectoDTORequest.getSenador_id().getId());
-        //senadorProyecto = senadorProyectoRepository.findById(senadorProyectoDTORequest.getProyecto_id().getId());
-
-        Optional<SenadorProyecto> senador = this.senadorProyectoRepository.findById(senadorProyectoDTORequest.getSenador_id().getId());
-        Optional<SenadorProyecto> proyecto = this.senadorProyectoRepository.findById(senadorProyectoDTORequest.getProyecto_id().getId());
-
-
-        //1
-        if (senador.isPresent()  && proyecto.isPresent()) {
+        if (senadorProyecto1 != null) {
             return null;
         } else {
             senadorProyecto = new SenadorProyecto();
             senadorProyecto.setVoto(senadorProyectoDTORequest.getVoto());
-            senadorProyecto.setProyecto_id(senadorProyectoDTORequest.getProyecto_id());
-            senadorProyecto.setSenador_id(senadorProyectoDTORequest.getSenador_id());
+            senadorProyecto.setProyecto(senadorProyectoDTORequest.getProyecto());
+            senadorProyecto.setSenador(senadorProyectoDTORequest.getSenador());
             senadorProyectoRepository.save(senadorProyecto);
 
             return SenadorProyectoDTO.builder()
                     .id(senadorProyecto.getId())
                     .voto(senadorProyecto.getVoto())
-                    .proyecto_id(String.valueOf(senadorProyecto.getProyecto_id()))
-                    .senador_id(String.valueOf(senadorProyecto.getSenador_id())).build();
+                    .proyecto(String.valueOf(senadorProyecto.getProyecto()))
+                    .senador(String.valueOf(senadorProyecto.getSenador())).build();
+
 
         }
-
-
-            /**if (senadorProyecto == null){
-             senadorProyecto = new SenadorProyecto();
-             senadorProyecto.setVoto(senadorProyectoDTORequest.getVoto());
-             senadorProyecto.setProyecto_id(senadorProyectoDTORequest.getProyecto_id());
-             senadorProyecto.setSenador_id(senadorProyectoDTORequest.getSenador_id());
-             senadorProyectoRepository.save(senadorProyecto);
-             }
-             return SenadorProyectoDTO.builder()
-             .id(senadorProyecto.getId())
-             .voto(senadorProyecto.getVoto())
-             .proyecto_id(String.valueOf(senadorProyecto.getProyecto_id()))
-             .senador_id(String.valueOf(senadorProyecto.getSenador_id()))
-             .build();
-             **/
 
         }
 
@@ -94,8 +73,8 @@ public class SenadorProyectoServiceImpl implements ISenadorProyectoService {
             Optional<SenadorProyecto> senadorProyectos = this.senadorProyectoRepository.findById(Long.valueOf(senadorProyectoId));
             SenadorProyecto senadorproyecto = senadorProyectos.get();
             senadorproyecto.setVoto(senadorProyectoDTORequest.getVoto());
-            senadorproyecto.setProyecto_id(senadorProyectoDTORequest.getProyecto_id());
-            senadorproyecto.setSenador_id(senadorProyectoDTORequest.getSenador_id());
+            senadorproyecto.setProyecto(senadorProyectoDTORequest.getProyecto());
+            senadorproyecto.setSenador(senadorProyectoDTORequest.getSenador());
 
             this.senadorProyectoRepository.save(senadorproyecto);
         }
