@@ -1,5 +1,6 @@
 package com.crud.CongresoIUD_DAO.service.impl;
 
+import com.crud.CongresoIUD_DAO.dto.request.SenadorDTORequest;
 import com.crud.CongresoIUD_DAO.dto.response.SenadorDTO;
 import com.crud.CongresoIUD_DAO.model.Senador;
 import com.crud.CongresoIUD_DAO.repository.ISenadorRepository;
@@ -8,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +30,7 @@ public class SenadorServiceImpl implements ISenadorService {
     public List<SenadorDTO> findAll() {
 
         List<Senador> senadores = senadorRepository.findAll();
-            // pendiente de revisar a ver si funciona el map
+
         return senadores.stream().map(senador -> SenadorDTO.builder()
                 .id(senador.getId())
                 .nombre(senador.getNombre())
@@ -37,6 +39,45 @@ public class SenadorServiceImpl implements ISenadorService {
                 .partido_politico_id(String.valueOf(senador.getPartido_politico_id()))
                 .build()).collect(Collectors.toList());
     }
+
+    @Override
+    public SenadorDTO saveSenador(SenadorDTORequest senadorDTORequest) {
+
+        Senador senador;
+
+        senador = senadorRepository.findSenadorByNombre(senadorDTORequest.getNombre());
+
+        if(senador == null){
+            senador = new Senador();
+            senador.setNombre(senadorDTORequest.getNombre());
+            senador.setDepartamento(senadorDTORequest.getDepartamento());
+            senador.setFecha(senadorDTORequest.getFecha());
+            senador.setPartido_politico_id(senadorDTORequest.getPartido_politico_id());
+            senadorRepository.save(senador);
+        } else {
+            senador.setNombre(senadorDTORequest.getNombre());
+            senador.setDepartamento(senadorDTORequest.getDepartamento());
+            senador.setFecha(senadorDTORequest.getFecha());
+            senador.setPartido_politico_id(senadorDTORequest.getPartido_politico_id());
+            senadorRepository.save(senador);
+        }
+        return  SenadorDTO.builder()
+                .id(senador.getId())
+                .nombre(senador.getNombre())
+                .departamento(senador.getDepartamento())
+                .fecha(String.valueOf(senador.getFecha()))
+                .partido_politico_id(String.valueOf(senador.getPartido_politico_id()))
+                .build();
+    }
+
+    @Override
+    public SenadorDTO deleteSenador(long id) {
+
+        senadorRepository.deleteById(id);
+        return SenadorDTO.builder().build();
+    }
+
+
 
 
 

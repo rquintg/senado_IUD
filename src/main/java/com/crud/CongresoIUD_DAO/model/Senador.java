@@ -20,16 +20,15 @@ public class Senador implements Serializable {
     @Column(unique = true, nullable = false)
     private String nombre;
 
-
     @Column(name = "departamento")
     private String departamento;
 
     @Column(name = "fecha")
     private LocalDate fecha;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "partido_politico_id")
-     partidoPolitico partido_politico_id;
+    PartidoPolitico partido_politico_id;
 
     public Senador(){}
 

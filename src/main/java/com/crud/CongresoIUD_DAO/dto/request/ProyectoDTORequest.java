@@ -1,7 +1,6 @@
 package com.crud.CongresoIUD_DAO.dto.request;
 
 
-import com.crud.CongresoIUD_DAO.model.PartidoPolitico;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -9,18 +8,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
-
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SenadorDTORequest {
+public class ProyectoDTORequest {
+
     @NotNull @NotEmpty
-    Long id;
-
+    long id;
     String nombre;
-    String departamento;
-    LocalDate fecha;
+    String descripcion;
 
-    PartidoPolitico partido_politico_id;
+
+
 }
