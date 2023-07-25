@@ -1,8 +1,10 @@
 package com.crud.CongresoIUD_DAO.controller;
 
+import com.crud.CongresoIUD_DAO.dto.request.SenadorDTORequest;
 import com.crud.CongresoIUD_DAO.dto.response.SenadorDTO;
 import com.crud.CongresoIUD_DAO.service.iface.ISenadorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,19 +25,25 @@ public class SenadorController {
         return ResponseEntity.ok().body(senadorService.findAll());
     }
 
-    /*@PostMapping
-    public ResponseEntity<Object> registerNewSenador(@RequestBody Senador senador){
-        return this.senadorService.addNewSenador(senador);
+    @PostMapping
+    public ResponseEntity<SenadorDTO> registerNewSenador(
+            @RequestBody SenadorDTORequest senadorDTORequest){
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(senadorService.saveSenador(senadorDTORequest));
     }
 
     @PutMapping
-    public ResponseEntity<Object> updateSenador(@RequestBody Senador senador){
-        return this.senadorService.addNewSenador(senador);
+    public ResponseEntity<SenadorDTO> updateSenador(
+            @RequestBody SenadorDTORequest senadorDTORequest){
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(senadorService.saveSenador(senadorDTORequest));
     }
 
     @DeleteMapping(path = "{senadorId}")
-    public ResponseEntity<Object> deleteSenador(@PathVariable("senadorId") long id){
-        return this.senadorService.deleteSenador(id);
-    }*/
+    public ResponseEntity<SenadorDTO> deleteSenador(@PathVariable("senadorId") long id){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(senadorService.deleteSenador(id));
+    }
 
 }

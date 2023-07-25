@@ -1,30 +1,29 @@
 package com.crud.CongresoIUD_DAO.model;
 
-
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "partido_politico")
-public class PartidoPolitico implements Serializable {
-
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Proyecto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+     long id;
 
     @Column(unique = true)
-    private String nombre;
+     String nombre;
 
     @Column(name= "descripcion")
-    private String descripcion;
+     String descripcion;
 
-    public PartidoPolitico(){}
+  public Proyecto(){}
 
-    public PartidoPolitico(long id) {
-        super();
+    public Proyecto(long id) {
         this.id = id;
     }
 }
