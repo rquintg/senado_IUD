@@ -37,6 +37,7 @@ public class Senador implements Serializable {
         this.id = id;
     }
 
+    @PrePersist
     public void prePersist() {
     	if(Objects.isNull(this.fecha)) {
     		this.fecha = LocalDate.now();
