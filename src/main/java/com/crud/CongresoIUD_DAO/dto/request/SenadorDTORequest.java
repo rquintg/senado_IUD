@@ -2,8 +2,11 @@ package com.crud.CongresoIUD_DAO.dto.request;
 
 
 import com.crud.CongresoIUD_DAO.model.PartidoPolitico;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -15,12 +18,22 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SenadorDTORequest {
-    @NotNull @NotEmpty
+
     Long id;
 
+    @NotBlank(message = "El nombre del senador no puede estar vacio")
+    @NotNull(message = "El nombre del senador no puede ser nulo")
+    @Size(min = 2, max = 120, message = "El nombre del senador debe tener entre 2 y 120 caracteres")
     String nombre;
+
+    @NotBlank(message = "El departamento del senador no puede estar vacio")
+    @NotNull(message = "El departamento del senador no puede ser nulo")
+    @Size(min = 2, max = 120, message = "El departamento del senador debe tener entre 2 y 120 caracteres")
     String departamento;
+
+    @JsonProperty("fecha")
     LocalDate fecha;
 
+    @NotNull(message = "Partido politico obligatorio")
     PartidoPolitico partido_politico_id;
 }

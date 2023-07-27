@@ -9,9 +9,12 @@ public interface ISenadorService {
 
     List<SenadorDTO> findAll();
     
-    SenadorDTO saveSenador(SenadorDTORequest senadorDTORequest);
+    String saveSenador(SenadorDTORequest senadorDTORequest);
 
-    SenadorDTO deleteSenador(long id);
+
+    String update (SenadorDTORequest senadorDTORequest, int senadorId);
+
+    String deleteSenador(long id);
 
 
 }
