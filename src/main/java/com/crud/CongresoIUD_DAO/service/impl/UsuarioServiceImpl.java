@@ -40,7 +40,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
         role.setId(2L);
         usuario = usuarioRepository.findByUsername(usuarioDTORequest.getUsername());
         if(usuario != null){
-            return null;
+            throw new IllegalArgumentException(
+                    "El correo electronico " + usuarioDTORequest.getUsername() + " ya se encuentra registrado");
         }
         usuario = new Usuario();
         usuario.setNombre(usuarioDTORequest.getNombre());

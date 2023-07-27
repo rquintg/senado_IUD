@@ -1,10 +1,7 @@
 package com.crud.CongresoIUD_DAO.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -18,16 +15,18 @@ import java.time.LocalDate;
 public class UsuarioDTORequest {
 
     @NotNull(message = "El username es obligatorio")
+    @NotEmpty(message = "El correo electronico no puede estar vacio")
     @Email(message =  "No cumple con formato de tipo email")
     String username;
 
     @NotNull(message = "El nombre es obligatorio")
-    @NotBlank(message = "El nombre no puede estar en blanco")
+    @NotEmpty(message = "El nombre no puede estar en blanco o vacio")
     @Size(min =  2, max = 120)
     String nombre;
 
     String apellido;
 
+    @NotEmpty(message = "Se requiere definir una contraseña")
     @Size(min = 5, message = "Debe suministrar una contraseña segura")
     String password;
 
