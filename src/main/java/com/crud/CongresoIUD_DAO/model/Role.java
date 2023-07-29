@@ -1,6 +1,6 @@
 package com.crud.CongresoIUD_DAO.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

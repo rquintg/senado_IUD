@@ -2,17 +2,21 @@ package com.crud.CongresoIUD_DAO.controller;
 
 import com.crud.CongresoIUD_DAO.dto.request.SenadorDTORequest;
 import com.crud.CongresoIUD_DAO.dto.response.SenadorDTO;
+import com.crud.CongresoIUD_DAO.model.Senador;
 import com.crud.CongresoIUD_DAO.service.iface.ISenadorService;
-import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/senador")
+@RequestMapping("/senador")
+
 public class SenadorController {
 
     //private final com.crud.CongresoIUD_DAO.service.senadorService senadorService;
@@ -20,13 +24,14 @@ public class SenadorController {
     @Autowired
     ISenadorService senadorService;
 
-
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping
     public ResponseEntity<List<SenadorDTO>> getSenadores() {
         return ResponseEntity.ok().body(senadorService.findAll());
     }
 
-    @PostMapping
+    @Secured({"ROLE_ADMIN"})
+    @PostMapping("/registrarsenador")
     public ResponseEntity<String> registerNewSenador(
             @Valid @RequestBody SenadorDTORequest senadorDTORequest)
     {
@@ -35,6 +40,7 @@ public class SenadorController {
                 .body(senadorService.saveSenador(senadorDTORequest));
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @PutMapping(value = "{senadorId}")
     public ResponseEntity<String> updateSenador (@RequestBody SenadorDTORequest senadorDTORequest, @PathVariable int senadorId)
   {
@@ -43,8 +49,7 @@ public class SenadorController {
                 .body(senadorService.update(senadorDTORequest, senadorId));
     }
 
-
-
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @DeleteMapping(path = "{senadorId}")
     public ResponseEntity<String
             > deleteSenador(@PathVariable("senadorId") long id){

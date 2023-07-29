@@ -1,7 +1,7 @@
 package com.crud.CongresoIUD_DAO.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.*;
+import javax.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;

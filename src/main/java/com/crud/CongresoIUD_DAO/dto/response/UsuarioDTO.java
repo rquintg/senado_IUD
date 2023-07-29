@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -22,5 +23,5 @@ public class UsuarioDTO {
 
     Boolean enabled;
 
-    Long roleId;
+    List<String> roles;
 }
