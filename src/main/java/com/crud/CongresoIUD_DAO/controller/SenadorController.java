@@ -36,7 +36,9 @@ public class SenadorController {
     }
 
     @PutMapping(value = "{senadorId}")
-    public ResponseEntity<String> updateSenador (@RequestBody SenadorDTORequest senadorDTORequest, @PathVariable int senadorId)
+    public ResponseEntity<String> updateSenador (
+            @Valid
+            @RequestBody SenadorDTORequest senadorDTORequest, @PathVariable int senadorId)
   {
         this.senadorService.update(senadorDTORequest, senadorId);
         return ResponseEntity.status(HttpStatus.ACCEPTED)

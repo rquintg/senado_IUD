@@ -2,6 +2,8 @@ package com.crud.CongresoIUD_DAO.service.impl;
 
 import com.crud.CongresoIUD_DAO.dto.request.SenadorProyectoDTORequest;
 import com.crud.CongresoIUD_DAO.dto.response.SenadorProyectoDTO;
+import com.crud.CongresoIUD_DAO.exceptions.UserNotFoundException;
+import com.crud.CongresoIUD_DAO.model.Proyecto;
 import com.crud.CongresoIUD_DAO.model.SenadorProyecto;
 import com.crud.CongresoIUD_DAO.repository.ISenadorProyectoRepository;
 import com.crud.CongresoIUD_DAO.service.iface.ISenadorProyectoService;
@@ -31,6 +33,8 @@ public class SenadorProyectoServiceImpl implements ISenadorProyectoService {
 
         List<SenadorProyecto> senadorProyecto = senadorProyectoRepository.findAll();
 
+        if(senadorProyecto.isEmpty()) throw new UserNotFoundException("No hay votos en la base de datos");
+
         return senadorProyecto.stream().map(senadorproyecto -> SenadorProyectoDTO.builder()
                 .id(senadorproyecto.getId())
                 .voto(senadorproyecto.getVoto())
@@ -48,7 +52,8 @@ public class SenadorProyectoServiceImpl implements ISenadorProyectoService {
                 (senadorProyectoDTORequest.getSenador().getId(),senadorProyectoDTORequest.getProyecto().getId());
 
         if (senadorProyecto1 != null) {
-            return null;
+                throw new IllegalArgumentException("el " + senadorProyectoDTORequest.getSenador().getNombre() +
+                        "ya voto el proyecto" +senadorProyectoDTORequest.getProyecto().getNombre());
         } else {
             senadorProyecto = new SenadorProyecto();
             senadorProyecto.setVoto(senadorProyectoDTORequest.getVoto());
@@ -71,6 +76,9 @@ public class SenadorProyectoServiceImpl implements ISenadorProyectoService {
         public void update (SenadorProyectoDTORequest senadorProyectoDTORequest,int senadorProyectoId){
 
             Optional<SenadorProyecto> senadorProyectos = this.senadorProyectoRepository.findById(Long.valueOf(senadorProyectoId));
+            if (senadorProyectos.isEmpty()) {
+                throw new IllegalArgumentException("No existe relacion de voto con id " + senadorProyectoId + " en la base de datos");
+            }
             SenadorProyecto senadorproyecto = senadorProyectos.get();
             senadorproyecto.setVoto(senadorProyectoDTORequest.getVoto());
             senadorproyecto.setProyecto(senadorProyectoDTORequest.getProyecto());
@@ -80,7 +88,13 @@ public class SenadorProyectoServiceImpl implements ISenadorProyectoService {
         }
         @Override
         public SenadorProyectoDTO deleteSenadorProyecto (Long id){
-            senadorProyectoRepository.deleteById(id);
+            Optional<SenadorProyecto> senadoPproyecto = senadorProyectoRepository.findById(id);
+
+            if (senadoPproyecto.isEmpty()) {
+                throw new UserNotFoundException("No existe el id " + id + " en la base de datos");
+            }else {
+                senadorProyectoRepository.deleteById(id);
+            }
             return SenadorProyectoDTO.builder().build();
         }
     }

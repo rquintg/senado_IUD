@@ -13,17 +13,20 @@ import java.io.Serializable;
 public class Proyecto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     long id;
+    long id;
 
-    @Column(unique = true)
-     String nombre;
+    @Column(unique = true, nullable = false)
+    String nombre;
 
-    @Column(name= "descripcion")
-     String descripcion;
+    @Column(name = "descripcion")
+    String descripcion;
 
-  public Proyecto(){}
+    public Proyecto() {
+    }
 
     public Proyecto(long id) {
+        super();
         this.id = id;
     }
+
 }

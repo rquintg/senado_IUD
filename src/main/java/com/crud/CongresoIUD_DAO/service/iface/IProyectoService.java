@@ -10,11 +10,11 @@ public interface IProyectoService {
 
     List<ProyectoDTO> findAll();
 
-    ProyectoDTO saveProyecto (ProyectoDTORequest proyectoDTORequest);
+    String saveProyecto (ProyectoDTORequest proyectoDTORequest);
 
-    void update (ProyectoDTORequest proyectoDTORequest, int proyectoId);
+    String update (ProyectoDTORequest proyectoDTORequest, int proyectoId);
 
-   ProyectoDTO deleteProyecto (Long id);
+   String deleteProyecto (Long id);
 
 
 }

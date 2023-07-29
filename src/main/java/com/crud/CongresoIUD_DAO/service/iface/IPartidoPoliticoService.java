@@ -9,9 +9,9 @@ public interface IPartidoPoliticoService {
 
     List<PartidoPoliticoDTO> findAll();
 
-    PartidoPoliticoDTO savePartido(PartidoPoliticoDTORequest partidoPoliticoDTORequest);
+    String savePartido(PartidoPoliticoDTORequest partidoPoliticoDTORequest);
 
-    void update (PartidoPoliticoDTORequest partidoPoliticoDTORequest, int partidoId);
+    String update (PartidoPoliticoDTORequest partidoPoliticoDTORequest, int partidoId);
 
-    PartidoPoliticoDTO deletePartido(Long id);
+    String deletePartido(Long id);
 }

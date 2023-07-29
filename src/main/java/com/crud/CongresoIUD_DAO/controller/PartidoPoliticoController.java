@@ -2,9 +2,11 @@ package com.crud.CongresoIUD_DAO.controller;
 
 
 import com.crud.CongresoIUD_DAO.dto.request.PartidoPoliticoDTORequest;
+import com.crud.CongresoIUD_DAO.dto.request.ProyectoDTORequest;
 import com.crud.CongresoIUD_DAO.dto.response.PartidoPoliticoDTO;
 import com.crud.CongresoIUD_DAO.service.iface.IPartidoPoliticoService;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,21 +29,24 @@ public class PartidoPoliticoController {
     }
 
     @PostMapping
-    public ResponseEntity<PartidoPoliticoDTO> registerNewPartido(@RequestBody PartidoPoliticoDTORequest partidoPoliticoDTORequest){
+    public ResponseEntity<String> savePartido(@Valid @RequestBody PartidoPoliticoDTORequest partidoPoliticoDTORequest){
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(partidoPoliticoService.savePartido(partidoPoliticoDTORequest));
     }
 
     @PutMapping(value = "{partidoId}")
-    public ResponseEntity<PartidoPoliticoDTO> updatePartidoPolitico (@RequestBody PartidoPoliticoDTORequest partidoPoliticoDTORequest, @PathVariable int partidoId) {
+    public ResponseEntity<String> updatePartidoPolitico(
+            @Valid
+            @RequestBody PartidoPoliticoDTORequest partidoPoliticoDTORequest,
+            @PathVariable int partidoId) {
         this.partidoPoliticoService.update(partidoPoliticoDTORequest, partidoId);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(partidoPoliticoService.savePartido(partidoPoliticoDTORequest));
+                .body(partidoPoliticoService.update(partidoPoliticoDTORequest,partidoId));
     }
 
 
     @DeleteMapping(path = "{partidoId}")
-    public ResponseEntity<PartidoPoliticoDTO> deletePartido(@PathVariable("partidoId") Long id){
+    public ResponseEntity<String> deletePartido(@PathVariable("partidoId") Long id){
         return ResponseEntity.status(HttpStatus.OK)
                 .body(partidoPoliticoService.deletePartido(id));
     }
